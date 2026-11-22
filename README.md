@@ -63,8 +63,9 @@ RZXXY-AI-Marketing/
 ├── .gitignore
 ├── main.py
 └── requirements.txt
+```
 
-â��️ Installation
+## Installation
 
 Clone the repository:
 
