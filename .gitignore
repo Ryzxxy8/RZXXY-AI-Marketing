@@ -7,3 +7,17 @@
 # Python cache
 __pycache__/
 *.py[cod]
+
+# Local HTML backups
+web/templates/*.bak
+web/templates/*.backup.html
+
+# Local development backups
+web/templates/*.bak
+web/templates/*.backup.html
+web/templates/*.prebuild.html
+web/templates/*.final-backup.html
+web/templates/*.language-backup.html
+
+# Versioned local backups
+web/templates/*.v2.*.html

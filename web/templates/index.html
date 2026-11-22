@@ -205,16 +205,235 @@ footer {
     .workspace { grid-template-columns: 1fr; }
     .hero { padding: 22px; }
 }
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 20px 0;
+}
+.stat-card {
+    padding: 20px;
+    text-align: center;
+}
+.stat-card span {
+    font-size: 14px;
+    opacity: 0.8;
+}
+.stat-card h2 {
+    font-size: 30px;
+    margin: 12px 0 0;
+}
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+@media(max-width: 650px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+.brand-logo {
+    display: block;
+    width: 230px;
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 8px rgba(65, 170, 255, 0.35));
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.brand-logo:hover {
+    filter: drop-shadow(0 0 15px rgba(150, 90, 255, 0.8));
+    transform: scale(1.03);
+}
+
+
+/* RZXXY V2.2 Animated Intro */
+.intro-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse at center, #17204b, #090d20 60%, #03050d);
+    transition: opacity .8s ease, visibility .8s ease;
+}
+.intro-screen.intro-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+.intro-stars {
+    position: absolute;
+    inset: -50%;
+    background-image:
+        radial-gradient(2px 2px at 20% 30%, #fff, transparent),
+        radial-gradient(2px 2px at 70% 60%, #55dfff, transparent),
+        radial-gradient(1px 1px at 40% 80%, #bd70ff, transparent);
+    background-size: 180px 180px;
+    animation: introStars 18s linear infinite;
+}
+.intro-content {
+    position: relative;
+    z-index: 2;
+    width: 90%;
+    max-width: 620px;
+    text-align: center;
+    animation: introReveal 1.2s ease both;
+}
+.intro-orbit {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 270px;
+    height: 135px;
+    margin: 0 auto 28px;
+}
+.intro-orbit-ring {
+    position: absolute;
+    width: 260px;
+    height: 105px;
+    border: 1px solid #50beff;
+    border-radius: 50%;
+    box-shadow: 0 0 25px #287dff, inset 0 0 20px #653bff;
+    animation: introOrbit 4s linear infinite;
+}
+.intro-logo {
+    position: relative;
+    width: 240px;
+    max-width: 90%;
+    filter: drop-shadow(0 0 16px #41aaff);
+    animation: introLogo 1.5s ease both;
+}
+.intro-welcome {
+    color: #7de7ff;
+    letter-spacing: 8px;
+    font-size: 13px;
+    animation: introText 1s .4s both;
+}
+.intro-title {
+    margin: 12px 0;
+    color: white;
+    font-size: clamp(22px, 5vw, 38px);
+    letter-spacing: 3px;
+    text-shadow: 0 0 18px #448dff, 0 0 35px #a04fff;
+    animation: introText 1s .7s both;
+}
+.intro-subtitle {
+    color: #c8b5ff;
+    letter-spacing: 5px;
+    font-size: 12px;
+}
+.intro-loader {
+    width: 75%;
+    max-width: 340px;
+    height: 5px;
+    margin: 35px auto 12px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #ffffff20;
+}
+.intro-loader-bar {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #36dfff, #8065ff, #ff55d4);
+    transform-origin: left;
+    animation: introLoading 2.8s ease-in-out both;
+}
+.intro-loading {
+    color: #9eb6e9;
+    font-size: 10px;
+    letter-spacing: 3px;
+}
+.intro-skip {
+    margin-top: 24px;
+    padding: 10px 24px;
+    color: white;
+    border: 1px solid #55caff;
+    border-radius: 30px;
+    background: #285ab830;
+    cursor: pointer;
+    letter-spacing: 2px;
+}
+.intro-skip:hover {
+    box-shadow: 0 0 20px #398dff;
+}
+@keyframes introStars {
+    to { transform: translateY(100px) rotate(8deg); }
+}
+@keyframes introOrbit {
+    to { transform: rotate(348deg); }
+}
+@keyframes introReveal {
+    from { opacity: 0; transform: translateY(25px) scale(.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes introLogo {
+    from { opacity: 0; transform: scale(.65); }
+    to { opacity: 1; transform: scale(1); }
+}
+@keyframes introText {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes introLoading {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
 </style>
+<link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='images/favicon.svg') }}">
 </head>
 
 <body>
+
+<div id="intro-screen" class="intro-screen">
+    <div class="intro-stars"></div>
+
+    <div class="intro-content">
+        <div class="intro-orbit">
+            <div class="intro-orbit-ring"></div>
+            <img
+                src="{{ url_for('static', filename='images/rzxxy-logo.svg') }}"
+                alt="RZXXY AI Marketing"
+                class="intro-logo">
+        </div>
+
+        <p class="intro-welcome">WELCOME TO</p>
+        <h1 class="intro-title">THE FUTURE OF MARKETING</h1>
+        <p class="intro-subtitle">CREATE · INNOVATE · GROW</p>
+
+        <div class="intro-loader">
+            <div class="intro-loader-bar"></div>
+        </div>
+
+        <p class="intro-loading">INITIALIZING EXPERIENCE...</p>
+
+        <button id="skip-intro" class="intro-skip">
+            SKIP INTRO »
+        </button>
+    </div>
+</div>
+
 <main class="container">
 
 <header>
-    <div class="logo">✦ RZXXY AI MARKETING</div>
-    <div class="badge">● LOCAL MODE · API NOT CONNECTED</div>
-
+    <div class="logo">
+    <img src="{{ url_for('static', filename='images/rzxxy-logo.svg') }}"
+         alt="RZXXY AI Marketing Logo"
+         class="brand-logo">
+</div>
+    <div class="header-controls">
+        <button id="demo-toggle" class="secondary">🧪 Demo: ON</button>
+        <button id="language-toggle" class="secondary">🌐 မြန်မာ</button>
+        <div class="badge" id="connection-status">● DEMO MODE</div>
+    </div>
 </header>
 
 <section class="hero">
@@ -228,6 +447,21 @@ footer {
 </section>
 
 <h2>📊 Marketing Dashboard</h2>
+
+<section class="stats-grid">
+    <div class="card stat-card">
+        <span>💬 Total Chats</span>
+        <h2 id="total-chats">0</h2>
+    </div>
+    <div class="card stat-card">
+        <span>🧪 Demo Chats</span>
+        <h2 id="demo-chats">0</h2>
+    </div>
+    <div class="card stat-card">
+        <span>📂 Categories Used</span>
+        <h2 id="categories-used">0</h2>
+    </div>
+</section>
 
 <section class="grid">
 
@@ -345,93 +579,235 @@ footer {
 
 <script>
 
+const translations = {
+    en: {
+        heroTitle: "Marketing Intelligence Hub",
+        heroDesc: "Your workspace for smarter marketing ideas and strategy.",
+        dashboard: "📊 Marketing Dashboard",
+        totalChats: "💬 Total Chats",
+        demoChats: "🧪 Demo Chats",
+        categoriesUsed: "📂 Categories Used",
+        history: "💬 Chat History",
+        clearHistory: "Clear History",
+        assistant: "🤖 AI Assistant",
+        placeholder: "Write your marketing task...",
+        send: "Send Message ➤",
+        welcome: "Welcome to RZXXY AI Marketing! Select a category or enter a marketing task.",
+        noHistory: "No saved conversations yet."
+    },
+    my: {
+        heroTitle: "Marketing Intelligence Hub",
+        heroDesc: "ပိုမိုကောင်းမွန်သော Marketing အကြံဉာဏ်များနှင့် မဟာဗျူဟာများအတွက် သင့်လုပ်ငန်းခွင်။",
+        dashboard: "📊 Marketing Dashboard",
+        totalChats: "💬 စုစုပေါင်း Chat",
+        demoChats: "🧪 Demo Chat",
+        categoriesUsed: "📂 အသုံးပြုထားသော Category",
+        history: "💬 စကားပြောမှတ်တမ်း",
+        clearHistory: "မှတ်တမ်းအားလုံး ဖျက်ရန်",
+        assistant: "🤖 AI Assistant",
+        placeholder: "Marketing လုပ်ငန်းတာဝန်ကို ရေးပါ...",
+        send: "စာပို့မည် ➤",
+        welcome: "RZXXY AI Marketing မှ ကြိုဆိုပါတယ်။ Category တစ်ခုရွေးပါ သို့မဟုတ် Marketing Task တစ်ခု ရေးပါ။",
+        noHistory: "သိမ်းဆည်းထားသော Chat မရှိသေးပါ။"
+    }
+};
+
+let currentLanguage = localStorage.getItem("rzxxy_language") || "en";
+
+function applyLanguage() {
+    const t = translations[currentLanguage];
+
+    const setText = (selector, value) => {
+        const element = document.querySelector(selector);
+        if (element) element.textContent = value;
+    };
+
+    setText(".hero h1", t.heroTitle);
+    setText(".hero > p", t.heroDesc);
+    setText("main > h2", t.dashboard);
+
+    document.querySelector("#total-chats").previousElementSibling.textContent = t.totalChats;
+    document.querySelector("#demo-chats").previousElementSibling.textContent = t.demoChats;
+    document.querySelector("#categories-used").previousElementSibling.textContent = t.categoriesUsed;
+    setText(".history-panel h2", t.history);
+    setText("#clear-history", t.clearHistory);
+    setText(".chat-panel h2", t.assistant);
+    document.getElementById("message").placeholder = t.placeholder;
+    setText("#send-button", t.send);
+    document.getElementById("language-toggle").textContent =
+        currentLanguage === "en" ? "🌐 မြန်မာ" : "🌐 English";
+
+    const welcome = document.querySelector("#messages .message.assistant");
+    if (welcome && messages.children.length === 1) {
+        welcome.textContent = t.welcome;
+    }
+
+    renderHistory();
+}
+
+document.getElementById("language-toggle").addEventListener("click", () => {
+    currentLanguage = currentLanguage === "en" ? "my" : "en";
+    localStorage.setItem("rzxxy_language", currentLanguage);
+    applyLanguage();
+});
+
 const form = document.getElementById("chat-form");
-
 const input = document.getElementById("message");
-
 const messages = document.getElementById("messages");
-
 const button = document.getElementById("send-button");
-
 const statusText = document.getElementById("status");
-
 const historyBox = document.getElementById("history");
 
+const demoToggle = document.getElementById("demo-toggle");
+const connectionStatus = document.getElementById("connection-status");
+
 let conversations = [];
+let demoMode = localStorage.getItem("rzxxy_demo_mode") !== "false";
 
 try {
-
     conversations = JSON.parse(
-
         localStorage.getItem("rzxxy_marketing_history") || "[]"
-
     );
-
+    if (!Array.isArray(conversations)) conversations = [];
 } catch {
-
     conversations = [];
-
 }
 
 function saveHistory() {
-
     localStorage.setItem(
-
         "rzxxy_marketing_history",
-
         JSON.stringify(conversations)
-
     );
+}
 
+function updateMode() {
+    demoToggle.textContent = demoMode ? "🧪 Demo: ON" : "🔌 Demo: OFF";
+    connectionStatus.textContent = demoMode
+        ? "● DEMO MODE"
+        : "● API MODE";
+    statusText.textContent = demoMode
+        ? "Demo mode active. No API connection needed."
+        : "API mode active. API connection required.";
+
+    localStorage.setItem("rzxxy_demo_mode", String(demoMode));
 }
 
 function addMessage(text, type) {
-
     const item = document.createElement("div");
-
     item.className = "message " + type;
-
     item.textContent = text;
-
     messages.appendChild(item);
-
     messages.scrollTop = messages.scrollHeight;
+}
 
+function detectCategory(question) {
+    const q = question.toLowerCase();
+
+    if (q.includes("social media") || q.includes("instagram")) return "Social Media";
+    if (q.includes("content")) return "Content Marketing";
+    if (q.includes("email")) return "Email Marketing";
+    if (q.includes("facebook") || q.includes("advertising") || q.includes("ads")) return "Facebook Ads";
+    if (q.includes("analytics") || q.includes("performance") || q.includes("metrics")) return "Analytics";
+    if (q.includes("copy") || q.includes("persuasive")) return "Copywriting";
+
+    return "General Marketing";
+}
+
+function createDemoAnswer(question, category) {
+    return [
+        "🧪 DEMO RESPONSE — Sample content, not AI-generated.",
+        "",
+        "Category: " + category,
+        "Task: " + question,
+        "",
+        "Suggested Marketing Plan:",
+        "1. Define your target audience and their needs.",
+        "2. Set one clear and measurable campaign goal.",
+        "3. Create useful content that addresses your audience.",
+        "4. Choose suitable marketing channels.",
+        "5. Track engagement and results.",
+        "6. Improve the campaign based on performance.",
+        "",
+        "💡 Demo Tip: Start with a small campaign and measure its results before expanding.",
+        "",
+        "Note: Connect an AI provider to receive real AI-generated responses."
+    ].join("\n");
+}
+
+function updateStats() {
+    const total = conversations.length;
+    const demoCount = conversations.filter(chat => chat.demo).length;
+    const categories = new Set(
+        conversations.map(chat => chat.category || detectCategory(chat.question))
+    );
+
+    document.getElementById("total-chats").textContent = total;
+    document.getElementById("demo-chats").textContent = demoCount;
+    document.getElementById("categories-used").textContent = categories.size;
 }
 
 function renderHistory() {
-
     historyBox.replaceChildren();
 
-    conversations.slice().reverse().forEach((chat) => {
+    conversations.slice().reverse().forEach((chat, reverseIndex) => {
+        const originalIndex = conversations.length - 1 - reverseIndex;
 
         const item = document.createElement("div");
-
         item.className = "history-item";
 
-        item.textContent = "💬 " + chat.question;
+        const title = document.createElement("span");
+        title.textContent = "💬 " + chat.question;
 
-        item.addEventListener("click", () => {
+        const actions = document.createElement("div");
+        actions.className = "history-actions";
 
+        const openButton = document.createElement("button");
+        openButton.type = "button";
+        openButton.textContent = "Open";
+        openButton.className = "secondary";
+
+        openButton.addEventListener("click", () => {
             messages.replaceChildren();
-
             addMessage("You: " + chat.question, "user");
-
             addMessage(chat.answer, chat.error ? "error" : "assistant");
-
         });
 
-        historyBox.appendChild(item);
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.textContent = "🗑️";
+        deleteButton.className = "secondary";
 
+        deleteButton.addEventListener("click", () => {
+            if (!confirm("Delete this conversation?")) return;
+
+            conversations.splice(originalIndex, 1);
+            saveHistory();
+            renderHistory();
+        });
+
+        actions.appendChild(openButton);
+        actions.appendChild(deleteButton);
+
+        item.appendChild(title);
+        item.appendChild(actions);
+        historyBox.appendChild(item);
     });
 
     if (!conversations.length) {
-
-        historyBox.textContent = "No saved conversations yet.";
-
+        historyBox.textContent =
+            translations[currentLanguage].noHistory;
     }
 
+    updateStats();
 }
+
+demoToggle.addEventListener("click", () => {
+
+    demoMode = !demoMode;
+
+    updateMode();
+
+});
 
 document.querySelectorAll(".category").forEach((card) => {
 
@@ -459,37 +835,53 @@ form.addEventListener("submit", async (event) => {
 
     button.disabled = true;
 
-    statusText.textContent = "Connecting to AI...";
+    const category = detectCategory(question);
 
     let answer = "";
 
     let errorOccurred = false;
 
+    const usedDemo = demoMode;
+
     try {
 
-        const response = await fetch("/api/chat", {
+        if (demoMode) {
 
-            method: "POST",
+            statusText.textContent = "Generating local demo response...";
 
-            headers: {"Content-Type": "application/json"},
+            answer = createDemoAnswer(question, category);
 
-            body: JSON.stringify({message: question})
+            addMessage(answer, "assistant");
 
-        });
+        } else {
 
-        const data = await response.json();
+            statusText.textContent = "Connecting to AI API...";
 
-        if (!response.ok) {
+            const response = await fetch("/api/chat", {
 
-            throw new Error(data.error || "Request failed.");
+                method: "POST",
+
+                headers: {"Content-Type": "application/json"},
+
+                body: JSON.stringify({message: question})
+
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+
+                throw new Error(data.error || "Request failed.");
+
+            }
+
+            answer = "Categories: " + data.categories.join(", ") +
+
+                     "\n\n" + data.answer;
+
+            addMessage(answer, "assistant");
 
         }
-
-        answer = "Categories: " + data.categories.join(", ") +
-
-                 "\n\n" + data.answer;
-
-        addMessage(answer, "assistant");
 
     } catch (error) {
 
@@ -509,6 +901,10 @@ form.addEventListener("submit", async (event) => {
 
             error: errorOccurred,
 
+            demo: usedDemo,
+
+            category: category,
+
             time: new Date().toISOString()
 
         });
@@ -519,7 +915,11 @@ form.addEventListener("submit", async (event) => {
 
         button.disabled = false;
 
-        statusText.textContent = "Ready";
+        statusText.textContent = errorOccurred
+
+            ? "Request failed."
+
+            : (usedDemo ? "Demo response ready." : "Ready.");
 
         input.focus();
 
@@ -529,6 +929,8 @@ form.addEventListener("submit", async (event) => {
 
 document.getElementById("clear-history").addEventListener("click", () => {
 
+    if (!confirm("Delete all chat history?")) return;
+
     conversations = [];
 
     saveHistory();
@@ -537,7 +939,40 @@ document.getElementById("clear-history").addEventListener("click", () => {
 
 });
 
+updateMode();
+
 renderHistory();
+
+applyLanguage();
+
+
+/* RZXXY V2.2 Intro Controller */
+(function () {
+    const intro = document.getElementById("intro-screen");
+    const skip = document.getElementById("skip-intro");
+
+    if (!intro) return;
+
+    function closeIntro() {
+        if (intro.classList.contains("intro-hidden")) return;
+        intro.classList.add("intro-hidden");
+        sessionStorage.setItem("rzxxy_intro_seen", "1");
+    }
+
+    if (sessionStorage.getItem("rzxxy_intro_seen") === "1") {
+        intro.classList.add("intro-hidden");
+        return;
+    }
+
+    const timer = setTimeout(closeIntro, 3200);
+
+    if (skip) {
+        skip.addEventListener("click", function () {
+            clearTimeout(timer);
+            closeIntro();
+        });
+    }
+})();
 
 </script>
 
