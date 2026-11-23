@@ -1,4 +1,3 @@
-import logging
 import os
 import secrets
 from urllib.parse import urlsplit
@@ -21,8 +20,10 @@ ALLOWED_HOSTS = {
 }
 
 if APP_ENV == "production":
-    if not APP_PASSWORD:
-        raise RuntimeError("APP_PASSWORD must be configured in production.")
+    if APP_USERNAME == "admin" or not APP_USERNAME:
+        raise RuntimeError("Set a non-default APP_USERNAME in production.")
+    if len(APP_PASSWORD) < 16:
+        raise RuntimeError("APP_PASSWORD must contain at least 16 characters in production.")
     if not ALLOWED_HOSTS:
         raise RuntimeError("ALLOWED_HOSTS must be configured in production.")
 
