@@ -26,8 +26,11 @@ def chat():
             "answer": result["answer"]
         })
 
-    except Exception as error:
-        return jsonify({"error": str(error)}), 500
+    except Exception:
+        app.logger.exception("Unexpected error while processing /api/chat")
+        return jsonify({
+            "error": "An internal server error occurred. Please try again later."
+        }), 500
 
 
 if __name__ == "__main__":
