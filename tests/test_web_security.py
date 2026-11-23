@@ -51,6 +51,21 @@ class TestWebAPISecurity(unittest.TestCase):
         response = self.client.get("/", headers={"Authorization": "Basic " + token})
         self.assertEqual(response.status_code, 200)
 
+    def test_host_allowlist_rejects_unrecognized_hosts(self):
+        app.config.update(ALLOWED_HOSTS={"dashboard.example.com"})
+        response = self.client.get("/", headers={"Host": "attacker.invalid"})
+        self.assertEqual(response.status_code, 400)
+
+    def test_request_body_limit_returns_json_error(self):
+        app.config.update(MAX_CONTENT_LENGTH=100)
+        response = self.client.post(
+            "/api/chat",
+            data='{"message":"' + ("x" * 200) + '"}',
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 413)
+        self.assertIn(b"too large", response.data)
+
     def test_chat_requires_json(self):
         response = self.client.post("/api/chat", data="message=hello")
         self.assertEqual(response.status_code, 415)
