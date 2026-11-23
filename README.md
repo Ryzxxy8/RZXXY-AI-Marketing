@@ -69,78 +69,69 @@ RZXXY-AI-Marketing/
 
 Clone the repository:
 
+```bash
 git clone https://github.com/Ryzxxy8/RZXXY-AI-Marketing.git
-
-Navigate into the project:
-
 cd RZXXY-AI-Marketing
-
-Install dependencies:
-
 pip install -r requirements.txt
+```
 
-────────
+## 🔑 Configuration
 
-🔑 Configuration
+1. Create a local `.env` file using `.env.example` as a reference.
+2. Add your Gemini API key to `GEMINI_API_KEY` if you want to enable Gemini integration.
+3. Keep API keys and passwords private. Never commit the real `.env` file.
 
-1. Create your local .env file using .env.example as a reference.
-2. Add your Gemini API configuration if you want to enable Gemini integration.
-3. Keep your API keys private.
-4. Never commit .env or other secret credentials to GitHub.
+Demo Mode can be used locally without connecting an AI provider.
 
-Demo Mode can be used to explore the dashboard without connecting an AI provider.
+## ▶️ Run the Web Dashboard
 
-────────
+Start the local Flask application:
 
-▶️ Run the Web Dashboard
-
-Start the Flask application:
-
+```bash
 python3 -m flask --app web.app run --host 127.0.0.1 --port 5000
+```
 
-Open your browser:
+Open `http://127.0.0.1:5000` in your browser.
 
-http://127.0.0.1:5000
+## 🛡️ Security Configuration
 
-────────
+The development server binds to loopback and does not require login by default. Before exposing the application publicly, configure all of the following in the deployment environment:
 
-🧪 Run Tests
+- `APP_ENV=production`
+- `APP_USERNAME` — a non-default login name
+- `APP_PASSWORD` — a long, unique password
+- `ALLOWED_HOSTS` — comma-separated exact hostnames for the deployment (do not include URL schemes or paths)
+- `GEMINI_API_KEY` — keep the provider key server-side only
+- `RATELIMIT_STORAGE_URI` — use a shared Redis URL when running multiple workers or instances
 
-python3 -m pytest -v
+The application refuses to start in production mode if `APP_PASSWORD` or `ALLOWED_HOSTS` is missing. The dashboard and API use HTTP Basic Authentication when credentials are configured. Public deployments must use HTTPS; terminate TLS at a trusted hosting platform or reverse proxy. Do not expose Flask's development server to the internet.
 
-────────
+The chat API enforces a request-body limit, a message-length limit, JSON validation, and a default limit of 10 requests per minute per client IP. The default `memory://` rate-limit store is process-local; use shared storage for multi-worker deployments. Configure trusted-proxy handling and edge-level request limits in the hosting environment rather than blindly trusting forwarded headers.
 
-🛠️ Technology Stack
+Security response headers include Content Security Policy, frame protection, MIME sniffing protection, Referrer Policy, and a restrictive Permissions Policy. The current dashboard uses inline CSS and JavaScript, so the CSP retains `unsafe-inline` for those two directives; move those assets to separate files before tightening the policy further.
 
-• Python
-• Flask
-• HTML5
-• CSS3
-• JavaScript
-• SVG
-• Gemini AI integration
-• Git & GitHub
+## 🧪 Run Tests
 
-────────
+```bash
+python3 -m unittest discover -s tests -v
+```
 
-🔐 Security
+## 🛠️ Technology Stack
 
-• Keep API keys and credentials private.
-• Use environment variables for sensitive configuration.
-• Do not upload .env files.
-• Review changes before publishing to GitHub.
+- Python
+- Flask
+- Flask-Limiter
+- HTML5, CSS3, JavaScript, SVG
+- Gemini AI integration
+- Git & GitHub
 
-────────
-
-📌 Project Status
+## 📌 Project Status
 
 Current Version: V2.2
 
 Status: Active Development
 
-────────
-
-👨‍💻 Developer
+## 👨‍💻 Developer
 
 RZXXY
 
@@ -148,7 +139,7 @@ GitHub: @Ryzxxy8
 
 Project: RZXXY AI Marketing
 
-────────
+---
 
 <p align="center">
   <strong>RZXXY AI MARKETING</strong><br>
